@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            //userid入るようにしないといけない
+            $table->integer('user_id')->nullable();
             $table->text('feeds');
             $table->timestamps();
         });

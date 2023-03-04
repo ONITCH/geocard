@@ -14,7 +14,8 @@ class FeedController extends Controller
      */
     public function index()
     {
-        return view('feed.index');
+        $feeds = Feed::getAllOrderByUpdated_at();
+        return view('feed.index', compact('feeds'));
     }
 
     /**
@@ -22,7 +23,8 @@ class FeedController extends Controller
      */
     public function create()
     {
-        return view('feed.create');
+        //feed createに行くはずだったやつ変えてる
+        return view('feed.index');
     }
 
     /**
@@ -30,7 +32,19 @@ class FeedController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //バリデーション
+        $validator = Validator::make($request->all(), [
+            'feed' => 'required | max:30',
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->route('feed.index')
+                ->withInput()
+                ->withErrors($validator);
+        }
+        $result = Feed::create($request->all());
+        // $feed?->user_id = $request->user()->id;
+        return redirect()->route('feed.index');
     }
 
     /**
