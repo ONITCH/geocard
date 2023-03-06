@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             //userid入るようにしないといけない
             $table->integer('user_id')->nullable();
-            $table->text('feeds');
+            $table->text('feed');
             $table->timestamps();
         });
     }

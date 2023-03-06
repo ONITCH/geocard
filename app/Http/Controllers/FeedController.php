@@ -43,7 +43,10 @@ class FeedController extends Controller
                 ->withErrors($validator);
         }
         $result = Feed::create($request->all());
-        // $feed?->user_id = $request->user()->id;
+        // $feed = new Feed;
+        // $feed->feed = $request->content;
+        // $feed->user_id = $request->user()->id;
+        // $user_id->user_id = $request->user()->id;
         return redirect()->route('feed.index');
     }
 

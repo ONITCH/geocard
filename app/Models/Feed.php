@@ -12,7 +12,7 @@ class Feed extends Model
     // 🔽 以下の処理を記述
     protected $guarded = [
         'id',
-        'user_id',
+        // 'user_id',
         'created_at',
         'updated_at',
     ];
