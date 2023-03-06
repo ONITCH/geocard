@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feeds', function (Blueprint $table) {
-            $table->id();
-            //userid入るようにしないといけない
-            // $table->integer('user_id')->nullable();
-            $table->text('feed');
-            $table->timestamps();
+        Schema::table('feeds', function (Blueprint $table) {
+            $table->foreignId('user_id')->after('id')->nullable()->constrained()->cascadeOnDelete();
         });
     }
 
@@ -25,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('feeds');
+        Schema::table('feeds', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn(['user_id']);
+        });
     }
 };

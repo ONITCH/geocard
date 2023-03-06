@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedController;
-
+use App\Http\Controllers\QrcodeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +16,11 @@ use App\Http\Controllers\FeedController;
 */
 
 // 🔽 追加
-Route::resource('feed', FeedController::class);
+Route::middleware('auth')->group(function () {
+    Route::resource('feed', FeedController::class);
+});
+
+Route::resource('qrcode', QrcodeController::class);
 
 Route::get('/', function () {
     return view('welcome');

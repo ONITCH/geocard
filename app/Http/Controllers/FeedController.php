@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Feed;
+use Illuminate\Support\Facades\Auth;
 
 
 class FeedController extends Controller
@@ -42,7 +43,9 @@ class FeedController extends Controller
                 ->withInput()
                 ->withErrors($validator);
         }
-        $result = Feed::create($request->all());
+        // 🔽 編集 フォームから送信されてきたデータとユーザIDをマージし，DBにinsertする
+        $data = $request->merge(['user_id' => Auth::user()->id])->all();
+        $result = Feed::create($data);
         // $feed = new Feed;
         // $feed->feed = $request->content;
         // $feed->user_id = $request->user()->id;
@@ -79,6 +82,7 @@ class FeedController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $result = Feed::find($id)->delete();
+        return redirect()->route('feed.index');
     }
 }
